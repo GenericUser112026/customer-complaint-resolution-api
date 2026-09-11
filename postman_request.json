@@ -1,0 +1,6 @@
+{
+  "method": "POST",
+  "url": "http://localhost:8000/api/v1/resolutions",
+  "headers": {"Content-Type": "application/json"},
+  "bodyFile": "sample_payload.json"
+}
