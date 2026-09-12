@@ -1,6 +1,23 @@
 {
-  "method": "POST",
-  "url": "http://localhost:8000/api/v1/resolutions",
-  "headers": {"Content-Type": "application/json"},
-  "bodyFile": "sample_payload.json"
+  "name": "Create or Update Complaint Resolution",
+  "request": {
+    "method": "POST",
+    "header": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "body": {
+      "mode": "raw",
+      "raw": "{\n  \"caseNumber\": \"Case4_ORD-10002\",\n  \"customerName\": \"Adam\",\n  \"customerEmail\": \"genericmail112026@gmail.com\",\n  \"orderNumber\": \"ORD-10002\",\n  \"resolutionStatus\": \"APPROVED\",\n  \"nextAction\": \"REPLACEMENT\",\n  \"overridden\": \"No\",\n  \"comments\": \"\",\n  \"caseStatus\": \"Processed\",\n  \"processedTime\": \"2026-09-11T16:03:31\"\n}"
+    },
+    "url": {
+      "raw": "http://127.0.0.1:8000/api/v1/resolutions",
+      "protocol": "http",
+      "host": ["127", "0", "0", "1"],
+      "port": "8000",
+      "path": ["api", "v1", "resolutions"]
+    }
+  }
 }

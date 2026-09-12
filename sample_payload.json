@@ -1,11 +1,12 @@
 {
-  "processedTime": "2026-09-11T13:25:25",
-  "caseNumber": "Case2_ORD-10003",
-  "customerName": "Akbar",
+  "caseNumber": "Case4_ORD-10002",
+  "customerName": "Adam",
   "customerEmail": "genericmail112026@gmail.com",
-  "orderNumber": "ORD-10003",
-  "resolutionStatus": "OTHER",
-  "overridden": "Yes",
-  "comments": "Just Testing the Overridden REsolution",
-  "caseStatus": "Processed"
+  "orderNumber": "ORD-10002",
+  "resolutionStatus": "APPROVED",
+  "nextAction": "REPLACEMENT",
+  "overridden": "No",
+  "comments": "",
+  "caseStatus": "Processed",
+  "processedTime": "2026-09-11T16:03:31"
 }
