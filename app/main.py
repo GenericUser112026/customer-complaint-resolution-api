@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 from typing import List
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,23 +69,35 @@ def upsert_resolution(record: ResolutionRecord):
         if existing.get("processedTime") == record.processedTime:
             records[i] = payload
             save_records(records)
-            return {
+            response_body = {
                 "success": True,
                 "operation": "updated",
                 "uniqueKey": record.processedTime,
                 "totalRecords": len(records),
                 "record": payload,
+                "message": "Complaint resolution published successfully",
             }
+            return JSONResponse(
+                content=response_body,
+                status_code=200,
+                headers={"Cache-Control": "no-store", "Connection": "close"},
+            )
 
     records.append(payload)
     save_records(records)
-    return {
+    response_body = {
         "success": True,
         "operation": "created",
         "uniqueKey": record.processedTime,
         "totalRecords": len(records),
         "record": payload,
+        "message": "Complaint resolution published successfully",
     }
+    return JSONResponse(
+        content=response_body,
+        status_code=200,
+        headers={"Cache-Control": "no-store", "Connection": "close"},
+    )
 
 
 @app.get("/api/v1/resolutions")
@@ -137,6 +149,10 @@ def published_results():
 <style>
 body {{ font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; color: #1f2937; }}
 .container {{ max-width: 1600px; margin: 0 auto; padding: 32px 20px; }}
+.brand {{ display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }}
+.logo-mark {{ width: 44px; height: 44px; border-radius: 12px; background: #111827; color: white; display: grid; place-items: center; font-weight: 800; font-size: 15px; letter-spacing: -0.5px; box-shadow: 0 4px 12px rgba(17,24,39,.18); }}
+.brand-name {{ font-size: 24px; font-weight: 800; letter-spacing: .5px; }}
+.brand-sub {{ font-size: 12px; color: #6b7280; margin-top: 2px; }}
 h1 {{ margin: 0 0 8px; font-size: 30px; }}
 .subtitle {{ margin: 0 0 24px; color: #6b7280; }}
 .summary {{ display: inline-block; background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 18px; margin-bottom: 20px; font-weight: 600; }}
@@ -151,6 +167,10 @@ tr:hover td {{ background: #f9fafb; }}
 </head>
 <body>
 <div class="container">
+<div class="brand">
+  <div class="logo-mark">P</div>
+  <div><div class="brand-name">PAVAJ AI</div><div class="brand-sub">Platform for Automation Vision, Analytics &amp; Judgment</div></div>
+</div>
 <h1>Customer Complaint Resolution — Published Results</h1>
 <p class="subtitle">Complete cumulative results published by the Customer Complaint Resolution system.</p>
 <div class="summary">Total Published Records: {len(records)}</div>
